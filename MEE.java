@@ -10,7 +10,10 @@ public class MEE {
 	 *  pré-requis : max >= 0
 	 *  action : crée un multi-ensemble vide dont les éléments seront
 	 * inférieurs à max*/
-	public MEE (int max){}
+	public MEE (int max){
+		this.tabFreq= new int[max];
+		this.nbTotEx=0;
+	}
 
 	/***  pré-requis : les éléments de tab sont positifs ou nuls
 	 *   action : crée un multi-ensemble dont le tableau de fréquences est
@@ -28,7 +31,12 @@ public class MEE {
 	}
 
 	/*** constructeur par copie*/
-	public MEE (MEE e){}
+	public MEE (MEE e){
+	this.tabFreq=new int[e.length];
+		this.nbTotEx=e.nbTotEx;
+		for(i=0;i<e.length;i++){
+		this.tabFreq[i]=e.nbTotEx[i];
+	}
 
 
 	/***  résultat : vrai ssi cet ensemble est vide*/
@@ -56,7 +64,13 @@ public class MEE {
 	 *  action/résultat : retire un exemplaire de i de this s’il en existe,
 	 *  et retourne vrai ssi cette action a pu être effectuée*/
 	public boolean retire (int i) {
-
+		if(i!=0){
+			this.tabFreq.length[i]=i-1;
+			this.nbTotEx=this.nbTotEx-1;
+			return true;
+		}else{
+			return false;
+		}
 	}
 
 	/*** pré-requis : this est non vide

@@ -230,7 +230,7 @@ public class Ut {
 
 
 
-
+/*
     //ajouts scrabble
     public static boolean estUneMajuscule () {
 
@@ -243,7 +243,7 @@ public class Ut {
     public static indexToMaj () {
 
     }
-    
+*/    
 } // end class
 
 

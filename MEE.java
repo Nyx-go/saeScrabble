@@ -1,7 +1,7 @@
 public class MEE {
 	private int [] tabFreq;  // tabFreq[i] est le nombre d’exemplaires
 							// (fréquence) de l’élément i
-	private int nbTotEx;// nombre total d’exemplaires
+	private int nbTotEx; // nombre total d’exemplaires
 
 
 
@@ -22,34 +22,32 @@ public class MEE {
 		this.nbTotEx = 0;
 		this.tabFreq = new int [tab.length];
 
-		for (i=0 ; i < tab.length ; i++) {
+		for (int i=0 ; i < tab.length ; i++) {
 			this.tabFreq[i]=tab[i];
 			if (tab[i]!=0) {
-				this.nbTotEx[i] = this.nbTotEx + tab[i] ;
+				this.nbTotEx = this.nbTotEx + tab[i] ;
 			}
 		}
 	}
 
 	/*** constructeur par copie*/
 	public MEE (MEE e){
-	this.tabFreq=new int[e.length];
+	this.tabFreq=new int[e.tabFreq.length];
 		this.nbTotEx=e.nbTotEx;
-		for(i=0;i<e.length;i++){
-		this.tabFreq[i]=e.nbTotEx[i];
+		for(int i=0;i<e.tabFreq.length;i++){
+			this.tabFreq[i]=e.tabFreq[i];
+		}
 	}
 
 
 	/***  résultat : vrai ssi cet ensemble est vide*/
-	public boolean estVide (){
-		boolean vide ;
-
-		if {this.nbTotEx==0} {
-			vide = true ;
+	public boolean estVide () {
+		if (this.nbTotEx==0) {
+			return true ;
 		}
 		else {
-			vide = false ;
+			return false ;
 		}
-		return vide;
 	}
 
 	
@@ -64,8 +62,8 @@ public class MEE {
 	 *  action/résultat : retire un exemplaire de i de this s’il en existe,
 	 *  et retourne vrai ssi cette action a pu être effectuée*/
 	public boolean retire (int i) {
-		if(i!=0){
-			this.tabFreq.length[i]=i-1;
+		if(this.tabFreq[i]!=0){
+			this.tabFreq[i]=i-1;
 			this.nbTotEx=this.nbTotEx-1;
 			return true;
 		}else{
@@ -78,9 +76,10 @@ public class MEE {
 	 * et le retourne*/
 	public int retireAleat () {
 		boolean worked = false;
+		int i = 0;
 
 		while (worked==false) {
-			int i = Ut.randomMinMax(0,this.length-1);
+			i = Ut.randomMinMax(0,this.tabFreq.length-1);
 			worked = this.retire(i);
 		}
 		return i;
@@ -96,7 +95,7 @@ public class MEE {
 		workedReti = this.retire(i) ;
 		if (workedReti == true && i < this.tabFreq.length) {
 			e.ajoute(i);
-			workedAjout == true ;
+			workedAjout = true ;
 		}
 		return workedAjout;
 	}
@@ -109,7 +108,7 @@ public class MEE {
 		int x = k;
 
 		while (x<0 && this.nbTotEx>0) {
-			int i = Ut.randomMinMax(0,this.length-1);
+			int i = Ut.randomMinMax(0,this.tabFreq.length-1);
 			worked = this.transfere(e,i);
 			if (worked == true) {
 				x=x-1;
@@ -125,6 +124,7 @@ public class MEE {
 	 * de this étant égale à v[i]*/
 	public int sommeValeurs (int[] v){
 		int x = 0;
+		int i;
 
 		for (i=0 ; i<tabFreq.length ; i++) {
 			x = x + tabFreq[i] * v[i];

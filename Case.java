@@ -1,6 +1,6 @@
 public class Case {
 	private int couleur;
-	private String lettre;
+	private char lettre;
 
 	/*** pré-requis : uneCouleur est un entier entre 1 et 5* action : constructeur de Case*/
 	public Case (int uneCouleur){
@@ -16,11 +16,11 @@ public class Case {
 	}
 
 	public void setLettre (char let){
-	lettre=let;	
+	this.lettre=let;	
 	}
 
 	public boolean estRecouverte(){
-		if(getLettre!=' '){
+		if(this.getLettre()!=' '){
 			return true;
 		}
 		else{

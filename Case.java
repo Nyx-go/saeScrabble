@@ -29,6 +29,6 @@ public class Case {
 	}
 
 	public String toString(){
-		return lettre;
+		return String.valueOf(this.lettre);
 	}
 }

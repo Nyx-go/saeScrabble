@@ -230,10 +230,10 @@ public class Ut {
 
 
 
-/*
-    //ajouts scrabble
-    public static boolean estUneMajuscule () {
 
+    //ajouts scrabble
+    public static boolean estUneMajuscule (Character c) {
+    	return c.isUpperCase();
     }
 
     public static String majToIndex () {
@@ -243,7 +243,7 @@ public class Ut {
     public static indexToMaj () {
 
     }
-*/    
+    
 } // end class
 
 

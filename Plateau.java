@@ -76,7 +76,24 @@ public class Plateau {
 		}
 		tabFinal = tabFinal + "*  " + SeparBas ;
 
-
 		return tabFinal;
 	}
+
+	/* pré-requis : mot est un mot accepté par CapeloDico,
+	* 0 <= numLig <= 14, 0 <= numCol <= 14, sens est un élément
+	* de {’h’,’v’} et l’entier maximum prévu pour e est au moins 25
+	* résultat : retourne vrai ssi le placement de mot sur this à partir
+	* de la case (numLig, numCol) dans le sens donné par sens à l’aide
+	* des jetons de e est valide.
+	*/
+	
+	/*public boolean placementValide(String mot, int numLig, int numCol, char sens, MEE e) {
+	*	boolean isValide = false;
+	*
+	*	if (mot.length>=2) {
+	*
+	*	}
+	*
+	*	return isValide;
+	}*/
 }

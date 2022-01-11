@@ -233,15 +233,25 @@ public class Ut {
 
     //ajouts scrabble
     public static boolean estUneMajuscule (Character c) {
-    	return c.isUpperCase();
+    	return Character.isUpperCase(c);
     }
 
-    public static String majToIndex () {
+    public static int majToIndex (char maj) {
+    	char[] tabMaj = {'A','B','C','C','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'};
+    	int index = -1; int i = 0;
 
+    	while (index == -1) {
+    		if (maj == tabMaj[i]) {
+    			index = i;
+    		}
+    		i++;
+    	}
+    	return index;
     }
 
-    public static indexToMaj () {
-
+    public static char indexToMaj (int i) {
+    	char[] tabMaj = {'A','B','C','C','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'};
+    	return tabMaj[i];
     }
     
 } // end class

@@ -7,7 +7,7 @@ public class Case {
 		this.couleur=uneCouleur;
 	}
 
-	public int GetCouleur(){
+	public int getCouleur(){
 		return this.couleur;
 	}
 
@@ -20,7 +20,7 @@ public class Case {
 	}
 
 	public boolean estRecouverte(){
-		if(this.getLettre()!=' '){
+		if(this.getLettre()!='\u0000'){
 			return true;
 		}
 		else{

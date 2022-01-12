@@ -87,13 +87,67 @@ public class Plateau {
 	* des jetons de e est valide.
 	*/
 	
-	/*public boolean placementValide(String mot, int numLig, int numCol, char sens, MEE e) {
-	*	boolean isValide = false;
-	*
-	*	if (mot.length>=2) {
-	*
-	*	}
-	*
-	*	return isValide;
-	}*/
+	public boolean placementValide(String mot, int numLig, int numCol, char sens, MEE e) {
+		boolean isValide = false; boolean isStringValide = capelDico(mot);
+		MEE eTempo = new MEE (e);
+		int i , index ;
+		char[] cArray = mot.toCharArray();
+		int[] strIndex = new int [] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};		
+
+		if (isStringValide == true) {
+			if (numCol == 8 && numLig == 8) {
+				if (mot.length()>=2) {
+					i = 0;
+					while ( i < cArray.length && isValide==true) {
+						index = Ut.majToIndex(cArray[i]);
+						isValide = eTempo.retire(index);
+						i++;
+					}
+				}
+			}
+
+			else {
+				if (sens == 'v' && numLig+cArray.length-1 < 15 ) {
+					if (numLig == 1 && 
+						this.g[cArray.length+1][numLig].estRecouverte()==false ||
+
+						this.g[numLig-1][numCol].estRecouverte()==false &&
+						numLig+mot.length()==15 ||
+
+						this.g[numLig-1][numCol].estRecouverte()==false &&
+						this.g[cArray.length+1][numCol].estRecouverte()==false) {
+
+						
+
+					}
+				}
+				else if (sens == 'h' && numCol+cArray.length-1 < 15) {
+					if (numCol == 1 && 
+						this.g[numLig][cArray.length+1].estRecouverte()==false ||
+
+						this.g[numLig][numCol-1].estRecouverte()==false &&
+						numCol+mot.length()==15 ||
+
+						this.g[numLig][numCol-1].estRecouverte()==false &&
+						this.g[numLig][cArray.length+1].estRecouverte()==false ) {
+
+
+
+					}
+				}
+			}
+		}
+
+		
+	
+		
+	
+		return isValide;
+	}
+
+	public boolean capelDico (String mot) {
+		boolean isValide;
+		Ut.afficher("Saisir si " + mot + " est valide (Dans le dico + maj): "); isValide=Ut.saisirBooleen();
+		return isValide;
+	}
 }

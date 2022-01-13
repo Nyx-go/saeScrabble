@@ -89,15 +89,16 @@ public class Plateau {
 	
 	public boolean placementValide(String mot, int numLig, int numCol, char sens, MEE e) {
 		boolean isValide = false; boolean isStringValide = capelDico(mot);
+		boolean isCaseRec = false; boolean isCaseNotRec = false; boolean isOneNotEqual = false;
+		char[] cArray = mot.toCharArray(); char[] cPresTab = new char [mot.length()]; 
+		int[] strIndex = new int [] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 		MEE eTempo = new MEE (e);
-		int i , index ;
-		char[] cArray = mot.toCharArray();
-		int[] strIndex = new int [] {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};		
+		int index ; int i = 0;
 
 		if (isStringValide == true) {
-			if (numCol == 8 && numLig == 8) {
+			if (numCol == 8 && numLig == 8 && this.g[8][8].estRecouverte()==false) {
 				if (mot.length()>=2) {
-					i = 0;
+					isValide = true //forcer l'entrée dans la boucle
 					while ( i < cArray.length && isValide==true) {
 						index = Ut.majToIndex(cArray[i]);
 						isValide = eTempo.retire(index);
@@ -117,7 +118,18 @@ public class Plateau {
 						this.g[numLig-1][numCol].estRecouverte()==false &&
 						this.g[cArray.length+1][numCol].estRecouverte()==false) {
 
-						
+						while (isCaseRec == false && isCaseNotRec == false && i < mot.length()) {
+							isCaseRec = this.g[numLig+i][numCol].estRecouverte();
+
+							if (isCaseRec == false) {
+								isCaseNotRec = true;
+								cPresTab[i] = 0 ;
+							}
+							else {
+								cPresTab[i] = this.g[numLig+i][numCol].getLettre();
+							}
+							i++;
+						}
 
 					}
 				}
@@ -131,17 +143,44 @@ public class Plateau {
 						this.g[numLig][numCol-1].estRecouverte()==false &&
 						this.g[numLig][cArray.length+1].estRecouverte()==false ) {
 
+						while (isCaseRec == false && isCaseNotRec == false && i < mot.length()) {
+							isCaseRec = this.g[numLig][numCol+i].estRecouverte();
 
+							if (isCaseRec == false) {
+								isCaseNotRec = true;
+								cPresTab[i] = 0 ;
+							}
+							else {
+								cPresTab[i] = this.g[numLig][numCol+i].getLettre();
+							}
+							i++;
+						}
 
+					}
+				}
+
+				if (isCaseRec == true && isCaseNotRec == true ) {
+					while ( i < mot.length() && isOneNotEqual == false ) {
+						if (cPresTab[i] != 0 ) {
+							isOneNotEqual = !(cPresTab[i]==cArray[i]);
+							index = Ut.majToIndex(cArray[i]);
+							e.ajoute(index);
+						}
+						i++;
+					}
+
+					if (isOneNotEqual == false) {
+						isValide = true //forcer l'entrée dans la boucle
+						i = 0;
+						while ( i < cArray.length && isValide==true) {
+							index = Ut.majToIndex(cArray[i]);
+							isValide = eTempo.retire(index);
+							i++;
+						}
 					}
 				}
 			}
 		}
-
-		
-	
-		
-	
 		return isValide;
 	}
 

@@ -10,6 +10,8 @@ public void ajouteScore(int nb){
   this.score=this.score+nb;
 }
 public int nbPointsChevalet (int[] nbPointsJet){
+  chevalet.nbPointsJet=ajouteScore(score);
+  return this.score;
 }
 public void prendJetons (Mee s, int nbJetons){
 }

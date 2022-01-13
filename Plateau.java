@@ -98,7 +98,7 @@ public class Plateau {
 		if (isStringValide == true) {
 			if (numCol == 8 && numLig == 8 && this.g[8][8].estRecouverte()==false) {
 				if (mot.length()>=2) {
-					isValide = true //forcer l'entrée dans la boucle
+					isValide = true; //forcer l'entrée dans la boucle
 					while ( i < cArray.length && isValide==true) {
 						index = Ut.majToIndex(cArray[i]);
 						isValide = eTempo.retire(index);
@@ -164,13 +164,13 @@ public class Plateau {
 						if (cPresTab[i] != 0 ) {
 							isOneNotEqual = !(cPresTab[i]==cArray[i]);
 							index = Ut.majToIndex(cArray[i]);
-							e.ajoute(index);
+							eTempo.ajoute(index);
 						}
 						i++;
 					}
 
 					if (isOneNotEqual == false) {
-						isValide = true //forcer l'entrée dans la boucle
+						isValide = true; //forcer l'entrée dans la boucle
 						i = 0;
 						while ( i < cArray.length && isValide==true) {
 							index = Ut.majToIndex(cArray[i]);
@@ -189,4 +189,100 @@ public class Plateau {
 		Ut.afficher("Saisir si " + mot + " est valide (Dans le dico + maj): "); isValide=Ut.saisirBooleen();
 		return isValide;
 	}
+
+	/* pré-requis : le placement de mot sur this à partir de la case
+	* (numLig, numCol) dans le sens donné par sens est valide
+	* résultat : retourne le nombre de points rapportés par ce placement, le
+	* nombre de points de chaque jeton étant donné par le tableau nbPointsJet.*/
+	public int nbPointsPlacement(String mot, int numLig, int numCol,
+	char sens, int[] nbPointsJet, MEE e) {
+		int countMultiply = 1; int countAdd = 0; int scrabble = 0; int i;
+		char[] cArray = mot.toCharArray();
+		MEE eTempo = new MEE (e); //Rajout de e pour vérifier les 50pts d'un Scrabble
+
+		if (sens == 'v') {
+			for (i = 0 ; i < mot.length() ; i++) {
+				countMultiply = countMultiply * this.g[numLig+i][numCol].getCouleur();
+			}
+		}
+		else {
+			for (i = 0 ; i < mot.length() ; i++) {
+				countMultiply = countMultiply * this.g[numLig][numCol+i].getCouleur();
+			}
+		}
+
+			for (i = 0 ; i < mot.length() ; i++) {
+				countAdd = countAdd + Ut.majToIndex(cArray[i]) ;
+			}
+
+		if (mot.length() >= 7 ) {
+			for ( i = 0 ; i < mot.length() ; i++) {
+				eTempo.retire( Ut.majToIndex(cArray[i]) );
+			}
+			if (eTempo.estVide()==true) {
+				scrabble = 50;
+			}
+		}
+
+		return countMultiply * countAdd + scrabble;
+	}
+
+	/**
+	* pré-requis : le placement de mot sur this à partir de la case
+	* (numLig, numCol) dans le sens donné par sens à l’aide des
+	* jetons de e est valide.
+	* action/résultat : effectue ce placement et retourne le
+	* nombre de jetons retirés de e.
+	*/
+	public int place(String mot, int numLig, int numCol, char sens, MEE e){
+		char[] cArray = mot.toCharArray();
+		char[] cPresTab = new char [mot.length()];
+		int i; int retire = 0; int index;
+
+		if (sens == 'v') {
+			for ( i = 0 ; i<mot.length() ; i++) {
+				this.g[numLig+i][numCol].setLettre(cArray[i]);
+			}
+
+			for (i=0 ; i < mot.length() ; i++) {
+				if (this.g[numLig+i][numCol].estRecouverte()==false) {
+					cPresTab[i] = 0 ;
+				}
+				else {
+					cPresTab[i] = this.g[numLig+i][numCol].getLettre();
+				}
+			}
+		}
+		else {
+			for ( i = 0 ; i<mot.length() ; i++) {
+				this.g[numLig][numCol+i].setLettre(cArray[i]) ;
+			}
+
+			for (i=0 ; i < mot.length() ; i++) {
+				if (this.g[numLig][numCol+i].estRecouverte()==false) {
+					cPresTab[i] = 0 ;
+				}
+				else {
+					cPresTab[i] = this.g[numLig+i][numCol].getLettre();
+				}
+			}		
+		}
+
+		for (i = 0 ; i < mot.length() ; i++) {
+			if (cPresTab[i] != 0 ) {
+				index = Ut.majToIndex(cArray[i]);
+				e.ajoute(index);
+				retire--;
+			}
+		}
+
+		for (i = 0 ; i < mot.length() ; i++) {
+			index = Ut.majToIndex(cArray[i]);
+			e.retire(index);
+			retire++;
+		}
+		
+		return retire;
+	}
+
 }
